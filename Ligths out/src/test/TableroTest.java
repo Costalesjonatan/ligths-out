@@ -16,11 +16,11 @@ public class TableroTest {
 	Tablero tablero;
 	boolean[][] esperado;
 	
-	@Before
-	public void setUp() throws IOException {
-		tablero = new Tablero();
-		esperado = new boolean[3][3];
-	}
+//	@Before
+//	public void setUp() throws IOException {
+//		tablero = new Tablero();
+//		esperado = new boolean[3][3];
+//	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void verificarPosicionValidaTest()

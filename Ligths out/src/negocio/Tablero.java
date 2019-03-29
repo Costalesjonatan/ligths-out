@@ -1,20 +1,18 @@
 package negocio;
 
-import java.io.IOException;
-
 public class Tablero {
-	//TODO el diseño quizas esta requiriendo otra calse que se encargue de tareas que tiene que ver con el juego(reglas de juego) que el tablero en si.
+
 	private boolean[][] _tablero;
-	
-	//TODO: El constructor que reciba el tamaño del tablero y que despues se encargue la nueva clase de cuando pedir tablero de un tamaño especifico
-	public Tablero() throws IOException 
-	{
-		_tablero = new boolean[3][3];
-	}
-	
+
 	public Tablero(int tamaño)
 	{
+		verificar_tamaño();
 		_tablero = new boolean[tamaño][tamaño];
+	}
+	
+	private void verificar_tamaño() 
+	{
+		
 	}
 
 	private void verificarArgumentos(int i, int j) 
@@ -48,9 +46,13 @@ public class Tablero {
 	{
 		boolean ret = true;
 		
-		for(int i = 0; i < getTamaño(); i++) 
+		for(int i = 0; i < getTamaño(); i++)
+		{
 			for(int j = 0; j < getTamaño(); j++)
+			{
 				ret = ret && !estaEncendida(i,j); //si apago todas las luces ret no cambia
+			}
+		}
 		
 		return ret;
 	}
@@ -67,25 +69,8 @@ public class Tablero {
 	
 	public void setLuz(int i, int j)
 	{
+		verificarArgumentos(i,j);
 		_tablero[i][j] = true;
-	}
-	
-	public Tablero clonar()
-	{
-		Tablero ret = new Tablero(getTamaño());
-		
-		for(int i = 0; i < getTamaño(); i++)
-		{
-			for(int j = 0; j < getTamaño(); j++)
-			{
-				if(estaEncendida(i,j))
-				{
-					ret.setLuz(i, j);
-				}
-			}
-		}
-		
-		return ret;
 	}
 	
 	public String toString() 

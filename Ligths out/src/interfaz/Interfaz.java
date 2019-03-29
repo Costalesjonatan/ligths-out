@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import negocio.Tablero;
+import negocio.Juego;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -25,15 +25,15 @@ public class Interfaz
 			int i = Integer.parseInt("" + posicion_i);
 			int j = Integer.parseInt("" + posicion_j);
 		
-			_tablero.realizarMoviento(i, j);
+			_juego.se_realizo_movimiento(i, j);
 			actualizarBotones();
-//			actualizarNivel();
+			actualizarNivel();
 		}
 	}
 	
 	private JFrame _frame;
 	private JButton[][] _botones;
-	private Tablero _tablero;
+	private Juego _juego;
 
 	public static void main(String[] args) 
 	{
@@ -70,7 +70,7 @@ public class Interfaz
 		_frame.getContentPane().setLayout(null);
 		
 		try {
-			_tablero = new Tablero();
+			_juego = new Juego();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,7 +79,7 @@ public class Interfaz
 
 	private void inicializarBotones() 
 	{
-		_botones = new JButton[_tablero.getTamaño()][_tablero.getTamaño()];
+		_botones = new JButton[_juego.obtener_tamaño_de_tablero()][_juego.obtener_tamaño_de_tablero()];
 		int x = 220;
 		int y = 170;
 		
@@ -103,11 +103,11 @@ public class Interfaz
 	
 	private void actualizarBotones()
 	{	
-		for(int i = 0; i < _tablero.getTamaño(); i++)
+		for(int i = 0; i < _juego.obtener_tamaño_de_tablero(); i++)
 		{
-			for(int j = 0; j < _tablero.getTamaño(); j++)
+			for(int j = 0; j < _juego.obtener_tamaño_de_tablero(); j++)
 			{
-				if(_tablero.estaEncendida(i, j))
+				if(_juego.verificar_estado_de_luz(i, j))
 				{
 					_botones[i][j].setBackground(Color.YELLOW);
 				}
@@ -117,27 +117,27 @@ public class Interfaz
 			}
 		}
 	}
-	//TODO: arreglalo
-//	private void actualizarNivel() 
-//	{
-//		if(_tablero.apagoTodasLasLuces())
-//		{	
-//			try 
-//			{
-////		  _tablero.cambiarNivel();
-//			} catch (IOException e) 
-//			{
-//				e.printStackTrace();
-//			} catch (NullPointerException e)
-//			{
-//				finalizarJuego();
-//			}
-//			limpiarBotones();
-//			inicializarBotones();
-//			actualizarBotones();
+	
+	private void actualizarNivel() 
+	{
+		if(_juego.termino_el_nivel())
+		{	
+			try 
+			{
+				_juego.cargar_siguiente_nivel();
+			} catch (IOException e) 
+			{
+				e.printStackTrace();
+			} catch (NullPointerException e)
+			{
+				finalizarJuego();
+			}
+			limpiarBotones();
+			inicializarBotones();
+			actualizarBotones();
 			
-//		}
-//	}
+		}
+	}
 
 	private void limpiarBotones() {
 		for(int i = 0; i < _botones.length; i++) 
