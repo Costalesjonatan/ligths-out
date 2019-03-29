@@ -27,7 +27,7 @@ public class Interfaz
 		
 			_tablero.realizarMoviento(i, j);
 			actualizarBotones();
-			actualizarNivel();
+//			actualizarNivel();
 		}
 	}
 	
@@ -117,27 +117,27 @@ public class Interfaz
 			}
 		}
 	}
-	
-	private void actualizarNivel() 
-	{
-		if(_tablero.apagoTodasLasLuces())
-		{	
-			try 
-			{
-				_tablero.cambiarNivel();
-			} catch (IOException e) 
-			{
-				e.printStackTrace();
-			} catch (NullPointerException e)
-			{
-				finalizarJuego();
-			}
-			limpiarBotones();
-			inicializarBotones();
-			actualizarBotones();
+	//TODO: arreglalo
+//	private void actualizarNivel() 
+//	{
+//		if(_tablero.apagoTodasLasLuces())
+//		{	
+//			try 
+//			{
+////		  _tablero.cambiarNivel();
+//			} catch (IOException e) 
+//			{
+//				e.printStackTrace();
+//			} catch (NullPointerException e)
+//			{
+//				finalizarJuego();
+//			}
+//			limpiarBotones();
+//			inicializarBotones();
+//			actualizarBotones();
 			
-		}
-	}
+//		}
+//	}
 
 	private void limpiarBotones() {
 		for(int i = 0; i < _botones.length; i++) 

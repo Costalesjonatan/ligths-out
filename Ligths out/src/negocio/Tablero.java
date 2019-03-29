@@ -2,65 +2,21 @@ package negocio;
 
 import java.io.IOException;
 
-import baseDeDatos.Datos;
-
 public class Tablero {
 	//TODO el diseño quizas esta requiriendo otra calse que se encargue de tareas que tiene que ver con el juego(reglas de juego) que el tablero en si.
 	private boolean[][] _tablero;
-	private int nivel;
+	
 	//TODO: El constructor que reciba el tamaño del tablero y que despues se encargue la nueva clase de cuando pedir tablero de un tamaño especifico
 	public Tablero() throws IOException 
 	{
 		_tablero = new boolean[3][3];
-		nivel = 0;
-		cargarNivel();
 	}
 	
-	private Tablero(int tamaño)
+	public Tablero(int tamaño)
 	{
 		_tablero = new boolean[tamaño][tamaño];
 	}
-	
-	//TODO: deberia estar en la nueva clase
-	public void cambiarNivel() throws IOException
-	{
-		if(apagoTodasLasLuces())
-		{
-			if(nivel == 0)
-			{
-				this._tablero = new boolean[4][4];
-				nivel++;
-				cargarNivel();
-			}
-			else if(nivel >= 1)
-			{
-				this._tablero = new boolean[5][5];
-				nivel++;
-				cargarNivel();
-			}
-		}
-	}
-	
-	//TODO: refactoriza para que pueda cargar cualquier nivel en cualquier momento que se requiera. deberia estar en la nueva clase
-	private void cargarNivel() throws IOException
-	{
-		String nivelAcargar = Datos.obtenerNivel(nivel);
-		
-		int i = 0;
-		
-		for(int j = 0; j < getTamaño(); j++)
-		{
-			for(int k = 0; k < getTamaño(); k++)
-			{
-				if(nivelAcargar.charAt(i) == '1')
-				{
-					_tablero[j][k] = true;
-				}
-				i++;
-			}
-		}
-	}
-	
+
 	private void verificarArgumentos(int i, int j) 
 	{
 		if(i < 0 || i > (getTamaño()-1)) 
@@ -109,7 +65,7 @@ public class Tablero {
 		return _tablero.length;
 	}
 	
-	private void setLuz(int i, int j)
+	public void setLuz(int i, int j)
 	{
 		_tablero[i][j] = true;
 	}

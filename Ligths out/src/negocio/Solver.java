@@ -9,40 +9,18 @@ public class Solver {
 	{
 		ArrayList<ArrayList<Integer>> combinaciones = binarios(5);
 		
-		Tablero tablero = null;
+		Juego juego = null;
 		
 		try {
-			tablero = new Tablero();
+			juego = new Juego();
+			juego.cargar_nivel_especifico(5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		tablero.realizarMoviento(1, 1);
-		tablero.realizarMoviento(1, 2);
-		tablero.realizarMoviento(1, 0);
-		tablero.realizarMoviento(2, 1);
-		tablero.realizarMoviento(0, 1);
-		try {
-			tablero.cambiarNivel();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		tablero.realizarMoviento(0, 0);
-		tablero.realizarMoviento(0, 3);
-		tablero.realizarMoviento(3, 0);
-		tablero.realizarMoviento(3, 3);
-		
-		try {
-			tablero.cambiarNivel();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		
 		for(ArrayList<Integer> combinacion: combinaciones)
 		{
-			Tablero posibleSolucion = tablero.clonar();
+			Tablero posibleSolucion = juego.clonar_tablero();
 			if(solver(posibleSolucion, combinacion))
 			{	
 				for(Integer digito: combinacion)
