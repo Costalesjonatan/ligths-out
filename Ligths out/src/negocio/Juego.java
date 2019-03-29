@@ -16,7 +16,7 @@ public class Juego {
 		cargar_nivel_especifico(0);
 	}
 	
-	public void se_realizo_movimiento(int i, int j)
+	public void realizar_movimiento(int i, int j)
 	{
 		_tablero.realizarMoviento(i, j);
 	}
@@ -63,7 +63,7 @@ public class Juego {
 			{
 				if(nivel_a_cargar.charAt(i) == '1')
 				{
-					_tablero.setLuz(j, k);;
+					_tablero.setLuz(j, k);
 				}
 				i++;
 			}
@@ -72,19 +72,7 @@ public class Juego {
 	
 	public Tablero clonar_tablero()
 	{
-		Tablero ret = new Tablero(_tablero.getTamaño());
-		
-		for(int i = 0; i < _tablero.getTamaño(); i++)
-		{
-			for(int j = 0; j < _tablero.getTamaño(); j++)
-			{
-				if(_tablero.estaEncendida(i, j))
-				{
-					ret.setLuz(i, j);
-				}
-			}
-		}
-		return ret;
+		return _tablero.clonar_tablero();
 	}
 	
 	public boolean termino_el_nivel()
@@ -100,6 +88,11 @@ public class Juego {
 	public boolean verificar_estado_de_luz(int i, int j)
 	{
 		return _tablero.estaEncendida(i, j);
+	}
+	
+	public int obtener_nivel_actual()
+	{
+		return nivel_actual;
 	}
 	
 	public String toString()

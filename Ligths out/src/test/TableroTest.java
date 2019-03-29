@@ -115,6 +115,19 @@ public class TableroTest {
 	}
 	
 	@Test
+	public void clonar_tablero_test()
+	{
+		tablero.realizarMoviento(1, 1);
+		Tablero clon = tablero.clonar_tablero();
+		esperado[1][1] = true;
+		esperado[1][0] = true;
+		esperado[1][2] = true;
+		esperado[0][1] = true;
+		esperado[2][1] = true;
+		assertTrue(Assert.iguales(clon, esperado));
+	}
+	
+	@Test
 	public void verificar_to_string() 
 	{
 		tablero.realizarMoviento(0, 0);

@@ -76,6 +76,23 @@ public class Tablero {
 		_tablero[i][j] = true;
 	}
 	
+	public Tablero clonar_tablero()
+	{
+		Tablero ret = new Tablero(getTamaño());
+		
+		for(int i = 0; i < getTamaño(); i++)
+		{
+			for(int j = 0; j < getTamaño(); j++)
+			{
+				if(estaEncendida(i, j))
+				{
+					ret.setLuz(i, j);
+				}
+			}
+		}
+		return ret;
+	}
+	
 	public String toString() 
 	{
 		StringBuilder cadenaTablero = new StringBuilder();

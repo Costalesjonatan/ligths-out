@@ -25,7 +25,7 @@ public class Interfaz
 			int i = Integer.parseInt("" + posicion_i);
 			int j = Integer.parseInt("" + posicion_j);
 		
-			_juego.se_realizo_movimiento(i, j);
+			_juego.realizar_movimiento(i, j);
 			actualizarBotones();
 			actualizarNivel();
 		}
