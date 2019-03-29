@@ -10,7 +10,7 @@ public class DatosTest {
 	@Test
 	public void obtenerNivelTest() throws IOException
 	{
-		String esperado = "1101110101011101010111011";
+		String esperado = "11011101010111010101110115";
 		
 		String nivel = Datos.obtenerNivel(2);
 		

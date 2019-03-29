@@ -6,13 +6,16 @@ public class Tablero {
 
 	public Tablero(int tamaño)
 	{
-		verificar_tamaño();
+		verificar_tamaño(tamaño);
 		_tablero = new boolean[tamaño][tamaño];
 	}
 	
-	private void verificar_tamaño() 
+	private void verificar_tamaño(int tamaño) 
 	{
-		
+		if(tamaño <= 0)
+		{
+			throw new IllegalArgumentException("se intento crear un tablero de tamaño 0 o negativo: " + tamaño);
+		}
 	}
 
 	private void verificarArgumentos(int i, int j) 
