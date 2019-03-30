@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 public class Solver {
 	
-	private static int contador_de_movimientos;
 	private static ArrayList<ArrayList<Integer>> posibles_soluciones = new ArrayList<ArrayList<Integer>>();
+	private static ArrayList<ArrayList<String>> caminos_de_movimientos = new ArrayList<ArrayList<String>>();
 	private static ArrayList<Integer> cantidad_de_movimientos = new ArrayList<Integer>();
-	private static Tablero clon;
+	private static ArrayList<String> camino_de_movimiento = new ArrayList<String>();
 	private static ArrayList<ArrayList<Integer>> combinaciones;
-	
+	private static int contador_de_movimientos;
+	private static String movimiento;
+	private static Tablero clon;
+
 	public static ArrayList<Integer> proximo_movimiento(Juego juego)
 	{
 		clon = juego.clonar_tablero();
@@ -22,6 +25,7 @@ public class Solver {
 			{	
 				posibles_soluciones.add(combinacion);
 				cantidad_de_movimientos.add(contador_de_movimientos);
+				caminos_de_movimientos.add(camino_de_movimiento);
 				//TODO: cuando este termiando borralo
 				for(Integer digito: combinacion)
 				{
@@ -31,6 +35,7 @@ public class Solver {
 				System.out.println();
 			}
 		}
+		System.out.println(caminos_de_movimientos.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento())));
 		return posibles_soluciones.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento()));
 	}
 	
@@ -56,6 +61,7 @@ public class Solver {
 	public static boolean solver(ArrayList<Integer> combinacion)
 	{
 		contador_de_movimientos = 0;
+		camino_de_movimiento = new ArrayList<String>();
 		
 		for(int i = 0; i < combinacion.size(); i++)
 		{
@@ -63,6 +69,8 @@ public class Solver {
 			{
 				clon.realizarMoviento(0, i);
 				contador_de_movimientos++;
+				movimiento = ""+0+i;
+				camino_de_movimiento.add(movimiento);
 			}
 		}
 		for(int i = 0; i < clon.getTamaño()-1; i++)
@@ -73,6 +81,8 @@ public class Solver {
 				{
 					clon.realizarMoviento(i+1, j);
 					contador_de_movimientos++;
+					movimiento = ""+(i+1)+j;
+					camino_de_movimiento.add(movimiento);
 				}
 			}
 		}
