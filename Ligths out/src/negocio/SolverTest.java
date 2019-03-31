@@ -9,27 +9,35 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SolverTest {
-
-	private ArrayList<ArrayList<Integer>> todas_las_soluciones;
+	
 	private Juego juego;
 	
 	@Before
 	public void setUp() throws IOException
 	{
 		juego = new Juego();
-		todas_las_soluciones = new ArrayList<ArrayList<Integer>>();
+	}
+	
+	
+	@Test
+	public void sugerir_movimiento_test() throws IOException
+	{
+		String sugerencia = Solver.sugerir_movmiento(juego);
+		String esperado = "01";
+		assertEquals(sugerencia, esperado);
 	}
 	
 	@Test
-	public void todas_las_soluciones_test() throws IOException
+	public void solucion_test()
 	{
-		for(int i = 0; i <= 38; i++)
-		{
-			todas_las_soluciones.add(Solver.proximo_movimiento(juego));
-			juego.cargar_siguiente_nivel();
-		}
-		todas_las_soluciones.add(Solver.proximo_movimiento(juego));
+		ArrayList<String> solucion = Solver.solucion(juego);
+		ArrayList<String> esperado = new ArrayList<String>();
+		esperado.add("01");
+		esperado.add("10");
+		esperado.add("11");
+		esperado.add("12");
+		esperado.add("21");
 		
-		assertEquals(todas_las_soluciones.size(), 40);
+		assertEquals(esperado, solucion);
 	}
 }

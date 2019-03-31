@@ -12,8 +12,24 @@ public class Solver {
 	private static int contador_de_movimientos;
 	private static String movimiento;
 	private static Tablero clon;
+	
+	public static String sugerir_movmiento(Juego juego)
+	{
+		posibles_soluciones(juego);
+		int movimiento = mejor_proximo_movimiento();
+		
+		return caminos_de_movimientos.get(cantidad_de_movimientos.indexOf(movimiento)).get(0);
+	}
+	
+	public static ArrayList<String> solucion(Juego juego)
+	{
+		posibles_soluciones(juego);
+		int movimiento = mejor_proximo_movimiento();
+		
+		return caminos_de_movimientos.get(cantidad_de_movimientos.indexOf(movimiento));
+	}
 
-	public static ArrayList<Integer> proximo_movimiento(Juego juego)
+	private static void posibles_soluciones(Juego juego)
 	{
 		clon = juego.clonar_tablero();
 		soluciones = new ArrayList<ArrayList<Integer>>();
@@ -32,10 +48,9 @@ public class Solver {
 				caminos_de_movimientos.add(camino_de_movimiento);
 			}
 		}
-		return soluciones.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento()));
 	}
 	
-	public static int mejor_proximo_movimiento()
+	private static int mejor_proximo_movimiento()
 	{
 		int mejor_solucion = 0;
 		
@@ -52,9 +67,8 @@ public class Solver {
 		}
 		return mejor_solucion;
 	}
-	
-	//TODO:tenes que refactorizar para que devuleva la opcion con la cual se resuelva en menos movimientos
-	public static boolean solver(ArrayList<Integer> combinacion)
+
+	private static boolean solver(ArrayList<Integer> combinacion)
 	{
 		contador_de_movimientos = 0;
 		camino_de_movimiento = new ArrayList<String>();
@@ -86,7 +100,7 @@ public class Solver {
 	}
 	
 	
-	public static ArrayList<ArrayList<Integer>> binarios(int tamañoDeTablero)
+	private static ArrayList<ArrayList<Integer>> binarios(int tamañoDeTablero)
 	{
 		combinaciones = new ArrayList<ArrayList<Integer>>();
 		
@@ -96,7 +110,7 @@ public class Solver {
 		return combinaciones;
 	}
 	
-	public static void contar_en_binario(int tamañoDeTablero)
+	private static void contar_en_binario(int tamañoDeTablero)
 	{
 		int resto;
 		int limite = (int) Math.pow(2, tamañoDeTablero);
@@ -117,7 +131,7 @@ public class Solver {
 		}
 	}
 	
-	public static void completar_binarios(int tamañoDeTablero)
+	private static void completar_binarios(int tamañoDeTablero)
 	{
 		for(ArrayList<Integer> numeroBinario: combinaciones)
 		{
