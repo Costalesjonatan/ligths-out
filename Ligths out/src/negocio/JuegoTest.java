@@ -28,7 +28,7 @@ Juego _juego;
 	@Test (expected = IllegalArgumentException.class)
 	public void verificar_argumento_nivel_inexistente() throws IOException
 	{
-		_juego.cargar_nivel_especifico(12);
+		_juego.cargar_nivel_especifico(40);
 	}
 	
 	@Test

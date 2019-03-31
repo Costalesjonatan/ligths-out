@@ -133,4 +133,12 @@ public class TableroTest {
 		esperado.append("110\n100\n000\n");
 		assertTrue(tablero.toString().equals(esperado.toString()));
 	}
+	
+	@Test
+	public void cargar_luces_test() 
+	{
+		String nivel_a_cargar = "111111111";
+		tablero.cargar_luces(nivel_a_cargar);
+		assertEquals(tablero.toString(), "111\n111\n111\n");
+	}
 }

@@ -26,7 +26,7 @@ public class Juego {
 		String siguiente_nivel = Datos.obtenerNivel((nivel_actual+1));
 		char tamaño = siguiente_nivel.charAt(siguiente_nivel.length()-1);
 		_tablero = new Tablero(Integer.parseInt(""+tamaño));
-		cargar_luces(siguiente_nivel);
+		_tablero.cargar_luces(siguiente_nivel);
 		nivel_actual+=1;
 	}
 	
@@ -36,7 +36,7 @@ public class Juego {
 		String siguiente_nivel = Datos.obtenerNivel(nivel);
 		char tamaño = siguiente_nivel.charAt(siguiente_nivel.length()-1);
 		_tablero = new Tablero(Integer.parseInt(""+tamaño));
-		cargar_luces(siguiente_nivel);
+		_tablero.cargar_luces(siguiente_nivel);
 		nivel_actual = nivel;
 	}
 	
@@ -50,23 +50,6 @@ public class Juego {
 		{
 			throw new IllegalArgumentException("El ultimo nivel disponible es el 39, usted requirio el nivel: " + nivel);
 
-		}
-	}
-	
-	private void cargar_luces(String nivel_a_cargar) throws IOException
-	{
-		int i = 0;
-		
-		for(int j = 0; j < _tablero.getTamaño(); j++)
-		{
-			for(int k = 0; k < _tablero.getTamaño(); k++)
-			{
-				if(nivel_a_cargar.charAt(i) == '1')
-				{
-					_tablero.setLuz(j, k);
-				}
-				i++;
-			}
 		}
 	}
 	

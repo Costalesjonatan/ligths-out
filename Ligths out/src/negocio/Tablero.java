@@ -76,6 +76,23 @@ public class Tablero {
 		_tablero[i][j] = true;
 	}
 	
+	public void cargar_luces(String nivel_a_cargar)
+	{
+		int i = 0;
+		
+		for(int j = 0; j < getTamaño(); j++)
+		{
+			for(int k = 0; k < getTamaño(); k++)
+			{
+				if(nivel_a_cargar.charAt(i) == '1')
+				{
+					setLuz(j, k);
+				}
+				i++;
+			}
+		}
+	}
+	
 	public Tablero clonar_tablero()
 	{
 		Tablero ret = new Tablero(getTamaño());
