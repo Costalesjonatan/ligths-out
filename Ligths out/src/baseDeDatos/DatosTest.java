@@ -1,12 +1,14 @@
-package test;
+package baseDeDatos;
 
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
+
 import org.junit.Test;
-import baseDeDatos.Datos;
 
 public class DatosTest {
-	
+
 	@Test
 	public void obtenerNivelTest() throws IOException
 	{
@@ -20,7 +22,7 @@ public class DatosTest {
 	@Test 
 	public void meQuedeSinNivelesTest() throws IOException 
 	{
-		String nivel = Datos.obtenerNivel(30);
+		String nivel = Datos.obtenerNivel(40);
 		
 		assertEquals(nivel, null);
 	}
@@ -30,5 +32,5 @@ public class DatosTest {
 	{
 		Datos.obtenerNivel(-1);
 	}
-	
+
 }

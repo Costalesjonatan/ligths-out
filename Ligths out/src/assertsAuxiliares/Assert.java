@@ -1,4 +1,4 @@
-package test;
+package assertsAuxiliares;
 
 import negocio.Tablero;
 

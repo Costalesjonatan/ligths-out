@@ -1,19 +1,17 @@
-package test;
+package negocio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import negocio.Juego;
+import assertsAuxiliares.Assert;
 
 public class JuegoTest {
-	
-	Juego _juego;
+
+Juego _juego;
 	
 	@Before
 	public void setUp() throws IOException

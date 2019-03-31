@@ -3,11 +3,11 @@ package negocio;
 import java.util.ArrayList;
 
 public class Solver {
-	
-	private static ArrayList<ArrayList<Integer>> posibles_soluciones = new ArrayList<ArrayList<Integer>>();
-	private static ArrayList<ArrayList<String>> caminos_de_movimientos = new ArrayList<ArrayList<String>>();
-	private static ArrayList<Integer> cantidad_de_movimientos = new ArrayList<Integer>();
-	private static ArrayList<String> camino_de_movimiento = new ArrayList<String>();
+	//TODO: esta clase deberia ser un objeto! definitivamente tiene que ser un objeto;
+	private static ArrayList<ArrayList<Integer>> soluciones;
+	private static ArrayList<ArrayList<String>> caminos_de_movimientos;
+	private static ArrayList<Integer> cantidad_de_movimientos;
+	private static ArrayList<String> camino_de_movimiento;
 	private static ArrayList<ArrayList<Integer>> combinaciones;
 	private static int contador_de_movimientos;
 	private static String movimiento;
@@ -16,27 +16,23 @@ public class Solver {
 	public static ArrayList<Integer> proximo_movimiento(Juego juego)
 	{
 		clon = juego.clonar_tablero();
+		soluciones = new ArrayList<ArrayList<Integer>>();
 		combinaciones = Solver.binarios(clon.getTamaño());
+		caminos_de_movimientos  = new ArrayList<ArrayList<String>>();
+		cantidad_de_movimientos = new ArrayList<Integer>();
+		camino_de_movimiento = new ArrayList<String>();
 		
 		for(ArrayList<Integer> combinacion: combinaciones)
 		{
 			clon = juego.clonar_tablero();
 			if(Solver.solver(combinacion))
 			{	
-				posibles_soluciones.add(combinacion);
+				soluciones.add(combinacion);
 				cantidad_de_movimientos.add(contador_de_movimientos);
 				caminos_de_movimientos.add(camino_de_movimiento);
-				//TODO: cuando este termiando borralo
-				for(Integer digito: combinacion)
-				{
-					
-					System.out.print(digito + ",");
-				}
-				System.out.println();
 			}
 		}
-		System.out.println(caminos_de_movimientos.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento())));
-		return posibles_soluciones.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento()));
+		return soluciones.get(cantidad_de_movimientos.indexOf(mejor_proximo_movimiento()));
 	}
 	
 	public static int mejor_proximo_movimiento()
@@ -86,7 +82,6 @@ public class Solver {
 				}
 			}
 		}
-		System.out.println(contador_de_movimientos);
 		return clon.apagoTodasLasLuces();
 	}
 	

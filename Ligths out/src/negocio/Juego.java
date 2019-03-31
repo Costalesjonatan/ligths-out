@@ -46,9 +46,9 @@ public class Juego {
 		{
 			throw new IllegalArgumentException("no existen niveles menores a 0, usted requirio el nivel: " + nivel);
 		}
-		if(nivel > 11)
+		if(nivel > 39)
 		{
-			throw new IllegalArgumentException("El ultimo nivel disponible es el 10, usted requirio el nivel: " + nivel);
+			throw new IllegalArgumentException("El ultimo nivel disponible es el 39, usted requirio el nivel: " + nivel);
 
 		}
 	}
