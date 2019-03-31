@@ -6,7 +6,6 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import negocio.Juego;
@@ -35,7 +34,12 @@ public class Interfaz
 			_contador_de_movimientos++;
 			_cantidad_de_movimientos.setText("Movimientos: " + _contador_de_movimientos);
 			actualizarBotones();
-			actualizarNivel();
+			try {
+				actualizarNivel();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -178,11 +182,13 @@ public class Interfaz
 		}
 	}
 	
-	private void actualizarNivel() 
+	private void actualizarNivel() throws InterruptedException  
+ 
 	{
-		_frame.repaint();
 		if(_juego.termino_el_nivel())
 		{	
+			_frame.repaint();
+			animacion_fin_nivel();
 			try 
 			{
 				_juego.cargar_siguiente_nivel();
@@ -198,6 +204,20 @@ public class Interfaz
 			actualizarBotones();
 			_contador_de_movimientos = 0;
 			_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
+			_nivel_actual.setText("Nivel: " + _juego.obtener_nivel_actual());
+			_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
+		}
+	}
+	//TODO: tenes que ver como hacer que el sistema haga una pausa
+	private void animacion_fin_nivel() throws InterruptedException
+	{
+		for(int i = 0; i < _botones.length; i++)
+		{
+			for(int j = 0; j < _botones.length; j++)
+			{
+				_botones[i][j].setBackground(Color.GREEN);
+				_botones[i][j].setBackground(Color.LIGHT_GRAY);
+			}
 		}
 	}
 
