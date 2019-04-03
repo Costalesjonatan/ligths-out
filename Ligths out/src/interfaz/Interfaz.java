@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class Interfaz 
@@ -34,20 +35,23 @@ public class Interfaz
 			_contador_de_movimientos++;
 			_cantidad_de_movimientos.setText("Movimientos: " + _contador_de_movimientos);
 			actualizarBotones();
-			try {
+			try 
+			{
 				actualizarNivel();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
+			} catch (InterruptedException e1) 
+			{
 				e1.printStackTrace();
 			}
 		}
 	}
 	
 	private JFrame _frame;
-	private JButton[][] _botones;
 	private Juego _juego;
+	private JButton[][] _botones;
 	private JButton _recargar_nivel;
 	private JButton _sugerir_movimiento;
+	private JButton _mostrar_solucion;
+	private JButton _siguiente_nivel;
 	private JTextField _nivel_actual;
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
@@ -82,10 +86,11 @@ public class Interfaz
 
 	private void initialize() 
 	{
-		try {
+		try 
+		{
 			_juego = new Juego();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) 
+		{
 			e.printStackTrace();
 		}	
 		
@@ -124,7 +129,7 @@ public class Interfaz
 		_frame.add(_cantidad_de_movimientos);
 		
 		_recargar_nivel = new JButton("recargar");
-		_recargar_nivel.setBounds(50, 400, 100, 20);
+		_recargar_nivel.setBounds(0, 400, 100, 20);
 		_recargar_nivel.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -134,7 +139,6 @@ public class Interfaz
 					_juego.cargar_nivel_especifico(_juego.obtener_nivel_actual());
 				} catch (IOException e1) 
 				{
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				_frame.repaint();
@@ -146,10 +150,11 @@ public class Interfaz
 		_frame.add(_recargar_nivel);
 		
 		_sugerir_movimiento = new JButton("ayuda");
-		_sugerir_movimiento.setBounds(150, 400, 100, 20);
+		_sugerir_movimiento.setBounds(100, 400, 100, 20);
 		_sugerir_movimiento.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				
 				String sugerencia = Solver.sugerir_movmiento(_juego);
 				_botones[Integer.parseInt(sugerencia.charAt(0)+"")][Integer.parseInt(sugerencia.charAt(1)+"")].setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -157,6 +162,48 @@ public class Interfaz
 			}
 		});
 		_frame.add(_sugerir_movimiento);
+		
+		_mostrar_solucion = new JButton("Solucion");
+		_mostrar_solucion.setBounds(200, 400, 100, 20);
+		_mostrar_solucion.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				ArrayList<String> solucion = Solver.solucion(_juego);
+				
+				for(String movimiento: solucion)
+				{
+					_botones[Integer.parseInt(movimiento.charAt(0) + "")][Integer.parseInt(movimiento.charAt(1) + "")].setBorder(BorderFactory.createLineBorder(Color.RED));
+				}
+				
+			}
+		});
+		_frame.add(_mostrar_solucion);
+		
+		_siguiente_nivel = new JButton("Siguiente");
+		_siguiente_nivel.setBounds(100, 430, 100, 20);
+		_siguiente_nivel.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try 
+				{
+					_juego.cargar_siguiente_nivel();
+					_frame.repaint();
+					limpiarBotones();
+					inicializarBotones();
+					actualizarBotones();
+					_contador_de_movimientos = 0;
+					_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
+					_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
+					_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
+				} catch (IOException e) 
+				{
+					e.printStackTrace();
+				}	
+			}
+		});
+		_frame.add(_siguiente_nivel);
 	}
 
 	private void inicializarBotones() 
@@ -202,12 +249,11 @@ public class Interfaz
 	}
 	
 	private void actualizarNivel() throws InterruptedException  
- 
 	{
 		if(_juego.termino_el_nivel())
 		{	
 			_frame.repaint();
-			animacion_fin_nivel();
+//			animacion_fin_nivel();
 			try 
 			{
 				_juego.cargar_siguiente_nivel();
@@ -228,17 +274,17 @@ public class Interfaz
 		}
 	}
 	//TODO: tenes que ver como hacer que el sistema haga una pausa
-	private void animacion_fin_nivel() throws InterruptedException
-	{
-		for(int i = 0; i < _botones.length; i++)
-		{
-			for(int j = 0; j < _botones.length; j++)
-			{
-				_botones[i][j].setBackground(Color.GREEN);
-				_botones[i][j].setBackground(Color.LIGHT_GRAY);
-			}
-		}
-	}
+//	private void animacion_fin_nivel() throws InterruptedException
+//	{
+//		for(int i = 0; i < _botones.length; i++)
+//		{
+//			for(int j = 0; j < _botones.length; j++)
+//			{
+//				_botones[i][j].setBackground(Color.GREEN);
+//				_botones[i][j].setBackground(Color.LIGHT_GRAY);
+//			}
+//		}
+//	}
 
 	private void limpiarBotones() {
 		for(int i = 0; i < _botones.length; i++) 
