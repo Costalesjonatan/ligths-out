@@ -52,6 +52,7 @@ public class Interfaz
 	private JButton _sugerir_movimiento;
 	private JButton _mostrar_solucion;
 	private JButton _siguiente_nivel;
+	private JButton _anterior_nivel;
 	private JTextField _nivel_actual;
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
@@ -181,7 +182,7 @@ public class Interfaz
 		_frame.add(_mostrar_solucion);
 		
 		_siguiente_nivel = new JButton("Siguiente");
-		_siguiente_nivel.setBounds(100, 430, 100, 20);
+		_siguiente_nivel.setBounds(150, 430, 100, 20);
 		_siguiente_nivel.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -204,6 +205,32 @@ public class Interfaz
 			}
 		});
 		_frame.add(_siguiente_nivel);
+		
+		_anterior_nivel = new JButton("Anterior");
+		_anterior_nivel.setBounds(50, 430, 100, 20);
+		_anterior_nivel.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				try 
+				{
+					_juego.cargar_nivel_especifico((_juego.obtener_nivel_actual()-1));
+					_frame.repaint();
+					limpiarBotones();
+					inicializarBotones();
+					actualizarBotones();
+					_contador_de_movimientos = 0;
+					_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
+					_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
+					_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
+				} catch (IOException e) 
+				{
+					//TODO: hace que el nivel anterior al primer nivel sea el ultimo y que el siguiente nivel del ultimo sea el primer nivel
+					e.printStackTrace();
+				}	
+			}
+		});
+		_frame.add(_anterior_nivel);
 	}
 
 	private void inicializarBotones() 
