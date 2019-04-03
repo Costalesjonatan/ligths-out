@@ -47,6 +47,7 @@ public class Interfaz
 	private JButton[][] _botones;
 	private Juego _juego;
 	private JButton _recargar_nivel;
+	private JButton _sugerir_movimiento;
 	private JTextField _nivel_actual;
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
@@ -92,24 +93,24 @@ public class Interfaz
 		_frame.setBounds(100, 100, 300, 600);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.getContentPane().setLayout(null);
-		_frame.getContentPane().setBackground(Color.GREEN);
+		_frame.getContentPane().setBackground(Color.GRAY);
 		_frame.setResizable(false);
 		
-		_nivel_actual = new JTextField("Nivel: " + 0);
+		_nivel_actual = new JTextField("Nivel: " + 1);
 		_nivel_actual.setHorizontalAlignment(SwingConstants.CENTER);
 		_nivel_actual.setBounds(0, 50, 80, 40);
 		_nivel_actual.setEditable(false);
 		_nivel_actual.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-		_nivel_actual.setBackground(Color.GREEN);
-		_nivel_actual.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		_nivel_actual.setBackground(Color.GRAY);
+		_nivel_actual.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		_frame.add(_nivel_actual);
 		
 		_objetivo_de_movimientos = new JTextField("Objetivo: " + Solver.solucion(_juego).size());
 		_objetivo_de_movimientos.setHorizontalAlignment(SwingConstants.CENTER);
 		_objetivo_de_movimientos.setBounds(90, 50, 100, 40);
 		_objetivo_de_movimientos.setEditable(false);
-		_objetivo_de_movimientos.setBackground(Color.GREEN);
-		_objetivo_de_movimientos.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		_objetivo_de_movimientos.setBackground(Color.GRAY);
+		_objetivo_de_movimientos.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		_frame.add(_objetivo_de_movimientos);
 		
 		_contador_de_movimientos = 0;
@@ -118,17 +119,21 @@ public class Interfaz
 		_cantidad_de_movimientos.setHorizontalAlignment(SwingConstants.CENTER);
 		_cantidad_de_movimientos.setBounds(195, 50, 100, 40);
 		_cantidad_de_movimientos.setEditable(false);
-		_cantidad_de_movimientos.setBackground(Color.GREEN);
-		_cantidad_de_movimientos.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		_cantidad_de_movimientos.setBackground(Color.GRAY);
+		_cantidad_de_movimientos.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		_frame.add(_cantidad_de_movimientos);
 		
 		_recargar_nivel = new JButton("recargar");
-		_recargar_nivel.setBounds(100, 400, 100, 40);
-		_recargar_nivel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+		_recargar_nivel.setBounds(50, 400, 100, 20);
+		_recargar_nivel.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{
 					_juego.cargar_nivel_especifico(_juego.obtener_nivel_actual());
-				} catch (IOException e1) {
+				} catch (IOException e1) 
+				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -139,6 +144,19 @@ public class Interfaz
 			}
 		});
 		_frame.add(_recargar_nivel);
+		
+		_sugerir_movimiento = new JButton("ayuda");
+		_sugerir_movimiento.setBounds(150, 400, 100, 20);
+		_sugerir_movimiento.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String sugerencia = Solver.sugerir_movmiento(_juego);
+				_botones[Integer.parseInt(sugerencia.charAt(0)+"")][Integer.parseInt(sugerencia.charAt(1)+"")].setBorder(BorderFactory.createLineBorder(Color.RED));
+				
+			}
+		});
+		_frame.add(_sugerir_movimiento);
 	}
 
 	private void inicializarBotones() 
@@ -173,11 +191,12 @@ public class Interfaz
 			{
 				if(_juego.verificar_estado_de_luz(i, j))
 				{
-					_botones[i][j].setBackground(Color.BLACK);
+					_botones[i][j].setBackground(Color.BLUE);
 				}
 				else {
 					_botones[i][j].setBackground(Color.LIGHT_GRAY);
 				}
+				_botones[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			}
 		}
 	}
@@ -204,7 +223,7 @@ public class Interfaz
 			actualizarBotones();
 			_contador_de_movimientos = 0;
 			_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
-			_nivel_actual.setText("Nivel: " + _juego.obtener_nivel_actual());
+			_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
 			_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
 		}
 	}
