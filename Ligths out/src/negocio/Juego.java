@@ -8,17 +8,20 @@ public class Juego {
 	
 	private Tablero _tablero;
 	private int nivel_actual;
+	private int contador_de_movimientos;
 	
 	public Juego() throws IOException
 	{
 		_tablero = new Tablero(3);
 		nivel_actual = 0;
+		contador_de_movimientos = 0;
 		cargar_nivel_especifico(0);
 	}
 	
 	public void realizar_movimiento(int i, int j)
 	{
 		_tablero.realizarMoviento(i, j);
+		contador_de_movimientos++;
 	}
 	
 	public void cargar_siguiente_nivel() throws IOException
@@ -28,6 +31,7 @@ public class Juego {
 		_tablero = new Tablero(Integer.parseInt(""+tamaño));
 		_tablero.cargar_luces(siguiente_nivel);
 		nivel_actual+=1;
+		contador_de_movimientos = 0;
 	}
 	
 	public void cargar_nivel_especifico(int nivel) throws IOException
@@ -38,6 +42,7 @@ public class Juego {
 		_tablero = new Tablero(Integer.parseInt(""+tamaño));
 		_tablero.cargar_luces(siguiente_nivel);
 		nivel_actual = nivel;
+		contador_de_movimientos = 0;
 	}
 	
 	private void verificar_argumento(int nivel)
@@ -76,6 +81,11 @@ public class Juego {
 	public int obtener_nivel_actual()
 	{
 		return nivel_actual;
+	}
+	
+	public int obtener_cantidad_de_movimientos()
+	{
+		return  contador_de_movimientos;
 	}
 	
 	public String toString()
