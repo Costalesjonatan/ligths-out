@@ -201,7 +201,25 @@ public class Interfaz
 				} catch (IOException e) 
 				{
 					e.printStackTrace();
-				}	
+				} catch (NullPointerException e1)
+				{
+					try 
+					{
+						_juego.cargar_nivel_especifico(0);
+					} catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+					_frame.repaint();
+					limpiarBotones();
+					inicializarBotones();
+					actualizarBotones();
+					_contador_de_movimientos = 0;
+					_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
+					_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
+					_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
+				}
+				
 			}
 		});
 		_frame.add(_siguiente_nivel);
@@ -225,9 +243,25 @@ public class Interfaz
 					_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
 				} catch (IOException e) 
 				{
-					//TODO: hace que el nivel anterior al primer nivel sea el ultimo y que el siguiente nivel del ultimo sea el primer nivel
 					e.printStackTrace();
-				}	
+				} catch (IllegalArgumentException e1)
+				{
+					try 
+					{
+						_juego.cargar_nivel_especifico(39);
+					} catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+					_frame.repaint();
+					limpiarBotones();
+					inicializarBotones();
+					actualizarBotones();
+					_contador_de_movimientos = 0;
+					_cantidad_de_movimientos.setText("Movimietos: " + _contador_de_movimientos);
+					_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
+					_objetivo_de_movimientos.setText("Objetivo: " + Solver.solucion(_juego).size());
+				}
 			}
 		});
 		_frame.add(_anterior_nivel);
