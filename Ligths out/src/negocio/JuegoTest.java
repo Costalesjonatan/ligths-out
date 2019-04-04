@@ -125,4 +125,13 @@ Juego _juego;
 
 		assertTrue(Assert.iguales(_juego.clonar_tablero(), esperado));
 	}
+	
+	@Test
+	public void cantidadDeMovimientosTest()
+	{
+		_juego.realizar_movimiento(1, 1);
+		_juego.realizar_movimiento(1, 0);
+		_juego.realizar_movimiento(1, 2);
+		assertEquals(_juego.obtener_cantidad_de_movimientos(), 3);
+	}
 }
