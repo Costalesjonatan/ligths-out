@@ -51,10 +51,15 @@ public class Interfaz
 	private JButton _sugerir_movimiento;
 	private JButton _mostrar_solucion;
 	private JButton _siguiente_nivel;
-	private JButton _anterior_nivel;
+	private JButton _nivel_anterior;
 	private JTextField _nivel_actual;
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
+	
+	//pantalla de titulo
+	private JTextField _titulo;
+	private JButton _modo_clasico;
+	private JButton _modo_libre;
 
 	public static void main(String[] args) 
 	{
@@ -77,9 +82,7 @@ public class Interfaz
 
 	public Interfaz() 
 	{
-		initialize();
-		inicializarBotones();
-		actualizarBotones();	
+		initialize();	
 	}
 
 	private void initialize() 
@@ -92,20 +95,62 @@ public class Interfaz
 			e.printStackTrace();
 		}	
 		iniciarFrame();
-		iniciarTextoDeNivel();
-		iniciarTextoDeObjetivo();
-		iniciarTextoDeCantidadMovimientos();
-		iniciarBotonDeRecargarNivel();
-		iniciarBotonDeSugerirMovimiento();
-		iniciarBotonDeMostrarSolucion();
-		iniciarBotonDeSiguienteNivel();
-		iniciarBotonDeNivelAnterior();		
+		
+		_titulo = new JTextField("Ligts out!");
+		_titulo.setBounds(0, 100, 300, 90);
+		_titulo.setFont(new Font("Times New Roman", Font.PLAIN, 75));
+		_titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		_titulo.setBackground(Color.GRAY);
+		_titulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		_titulo.setEditable(false);
+		_frame.add(_titulo);
+		
+		_modo_clasico = new JButton("Modo clasico");
+		_modo_clasico.setBounds(50, 300, 200, 30);
+		_modo_clasico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				_frame.remove(_modo_libre);
+				_frame.remove(_modo_clasico);
+				_frame.remove(_titulo);
+				_frame.repaint();
+				iniciarTextoDeNivel();
+				iniciarTextoDeObjetivo();
+				iniciarTextoDeCantidadMovimientos();
+				iniciarBotonDeRecargarNivel();
+				iniciarBotonDeSugerirMovimiento();
+				inicializarBotones();
+				actualizarBotones();
+			}
+		});
+		_frame.add(_modo_clasico);
+		
+		_modo_libre = new JButton("Modo libre");
+		_modo_libre.setBounds(50, 340, 200, 30);
+		_modo_libre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				_frame.remove(_modo_libre);
+				_frame.remove(_modo_clasico);
+				_frame.remove(_titulo);
+				_frame.repaint();
+				iniciarTextoDeNivel();
+				iniciarTextoDeObjetivo();
+				iniciarTextoDeCantidadMovimientos();
+				iniciarBotonDeRecargarNivel();
+				iniciarBotonDeSugerirMovimiento();
+				iniciarBotonDeMostrarSolucion();
+				iniciarBotonDeSiguienteNivel();
+				iniciarBotonDeNivelAnterior();
+				inicializarBotones();
+				actualizarBotones();
+			}
+		});
+		_frame.add(_modo_libre);
 	}
 
 	private void iniciarBotonDeNivelAnterior() {
-		_anterior_nivel = new JButton("Anterior");
-		_anterior_nivel.setBounds(50, 430, 100, 20);
-		_anterior_nivel.addActionListener(new ActionListener() 
+		_nivel_anterior = new JButton("Anterior");
+		_nivel_anterior.setBounds(50, 430, 100, 20);
+		_nivel_anterior.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -132,7 +177,7 @@ public class Interfaz
 				}
 			}
 		});
-		_frame.add(_anterior_nivel);
+		_frame.add(_nivel_anterior);
 	}
 
 	private void iniciarBotonDeSiguienteNivel() {
@@ -171,7 +216,7 @@ public class Interfaz
 
 	private void iniciarBotonDeMostrarSolucion() {
 		_mostrar_solucion = new JButton("Solucion");
-		_mostrar_solucion.setBounds(200, 400, 100, 20);
+		_mostrar_solucion.setBounds(100, 460, 100, 20);
 		_mostrar_solucion.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -190,7 +235,7 @@ public class Interfaz
 
 	private void iniciarBotonDeSugerirMovimiento() {
 		_sugerir_movimiento = new JButton("ayuda");
-		_sugerir_movimiento.setBounds(100, 400, 100, 20);
+		_sugerir_movimiento.setBounds(150, 400, 100, 20);
 		_sugerir_movimiento.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -206,7 +251,7 @@ public class Interfaz
 
 	private void iniciarBotonDeRecargarNivel() {
 		_recargar_nivel = new JButton("recargar");
-		_recargar_nivel.setBounds(0, 400, 100, 20);
+		_recargar_nivel.setBounds(50, 400, 100, 20);
 		_recargar_nivel.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -258,7 +303,7 @@ public class Interfaz
 	}
 
 	private void iniciarFrame() {
-		_frame = new JFrame();
+		_frame = new JFrame("Ligts out!");
 		_frame.setBounds(100, 100, 300, 600);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		_frame.getContentPane().setLayout(null);
