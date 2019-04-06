@@ -1,20 +1,23 @@
 package negocio;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import baseDeDatos.Datos;
-
+//TODO: hace los casos de test de los metodos que gargaste
 public class Juego {
 	
 	private Tablero _tablero;
 	private int nivel_actual;
 	private int contador_de_movimientos;
+	private int record_de_movimientos;
 	
 	public Juego() throws IOException
 	{
 		_tablero = new Tablero(3);
 		nivel_actual = 0;
 		contador_de_movimientos = 0;
+		record_de_movimientos = 0;
 		cargar_nivel_especifico(0);
 	}
 	
@@ -31,6 +34,7 @@ public class Juego {
 		_tablero = new Tablero(Integer.parseInt(""+tamaño));
 		_tablero.cargar_luces(siguiente_nivel);
 		nivel_actual+=1;
+		record_de_movimientos+=contador_de_movimientos;
 		contador_de_movimientos = 0;
 	}
 	
@@ -56,6 +60,23 @@ public class Juego {
 			throw new IllegalArgumentException("El ultimo nivel disponible es el 39, usted requirio el nivel: " + nivel);
 
 		}
+	}
+	
+	public ArrayList<String> obtener_solucion_del_nivel_actual()
+	{
+		return Solver.solucion(this);
+	}
+	
+	public String obtener_sugerencia_de_movimiento()
+	{
+		return Solver.sugerir_movmiento(this);
+	}
+	
+	public void reiniciar_juego() throws IOException
+	{
+		cargar_nivel_especifico(0);
+		record_de_movimientos = 0;
+		contador_de_movimientos = 0;
 	}
 	
 	public Tablero clonar_tablero()
@@ -86,6 +107,11 @@ public class Juego {
 	public int obtener_cantidad_de_movimientos()
 	{
 		return  contador_de_movimientos;
+	}
+	
+	public int obtener_record_de_movimientos()
+	{
+		return record_de_movimientos;
 	}
 	
 	public String toString()
