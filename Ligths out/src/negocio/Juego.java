@@ -75,6 +75,7 @@ public class Juego {
 	public void reiniciar_juego() throws IOException
 	{
 		cargar_nivel_especifico(0);
+		nivel_actual = 0;
 		record_de_movimientos = 0;
 		contador_de_movimientos = 0;
 	}

@@ -91,36 +91,84 @@ public class Interfaz
 		iniciarTituloDelJuego();
 		iniciar_boton_de_modo_clasico();
 		iniciar_boton_de_modo_libre();
-		
-		//TODO: agregar las funcionalidades a estos dos botones y ubicarlos correctamente
-		_volver_al_menu = new JButton("Menu");
-		_volver_al_menu.setBounds(50, 490, 100, 20);
-		_frame.add(_volver_al_menu);
-		
+		iniciarBotonDeRecords();
+	}
+
+	private void iniciarBotonDeRecords() {
 		_ver_mejores_puntuaciones = new JButton("Records");
-		_ver_mejores_puntuaciones.setBounds(150, 490, 100, 20);
+		_ver_mejores_puntuaciones.setBounds(50, 380, 200, 30);
+		_ver_mejores_puntuaciones.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				// TODO agregar lo necesario para que se vea la pantalla de records
+			}
+			
+		});
 		_frame.add(_ver_mejores_puntuaciones);
 	}
 
-	private void iniciar_objeto_juego() {
+	private void iniciarBotonDeMenu() 
+	{
+		_volver_al_menu = new JButton("Menu");
+		_volver_al_menu.setBounds(100, 490, 100, 20);
+		_volver_al_menu.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				limpiarBotones();
+				_frame.remove(_nivel_actual);
+				_frame.remove(_objetivo_de_movimientos);
+				_frame.remove(_cantidad_de_movimientos);
+				_frame.remove(_recargar_nivel);
+				_frame.remove(_sugerir_movimiento);
+				_frame.remove(_volver_al_menu);
+				_frame.remove(_mostrar_solucion);
+				_frame.remove(_nivel_anterior);
+				_frame.remove(_siguiente_nivel);
+				_frame.repaint();
+				_frame.add(_titulo);
+				_frame.add(_modo_clasico);
+				_frame.add(_modo_libre);
+				_frame.add(_ver_mejores_puntuaciones);
+				try 
+				{
+					_juego.reiniciar_juego();
+				} catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+			}
+		});
+		_frame.add(_volver_al_menu);
+	}
+
+	private void iniciar_objeto_juego() 
+	{
 		try 
 		{
 			_juego = new Juego();
-		} catch (IOException e) 
+		} 
+		catch (IOException e) 
 		{
 			e.printStackTrace();
 		}	
 	}
 
-	private void iniciar_boton_de_modo_libre() {
+	private void iniciar_boton_de_modo_libre() 
+	{
 		_modo_libre = new JButton("Modo libre");
 		_modo_libre.setBounds(50, 340, 200, 30);
-		_modo_libre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		_modo_libre.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				_frame.remove(_ver_mejores_puntuaciones);
 				_frame.remove(_modo_libre);
 				_frame.remove(_modo_clasico);
 				_frame.remove(_titulo);
 				_frame.repaint();
+				iniciarBotonDeMenu();
 				iniciarTextoDeNivel();
 				iniciarTextoDeObjetivo();
 				iniciarTextoDeCantidadMovimientos();
@@ -136,15 +184,20 @@ public class Interfaz
 		_frame.add(_modo_libre);
 	}
 
-	private void iniciar_boton_de_modo_clasico() {
+	private void iniciar_boton_de_modo_clasico() 
+	{
 		_modo_clasico = new JButton("Modo clasico");
 		_modo_clasico.setBounds(50, 300, 200, 30);
-		_modo_clasico.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		_modo_clasico.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				_frame.remove(_modo_libre);
 				_frame.remove(_modo_clasico);
+				_frame.remove(_ver_mejores_puntuaciones);
 				_frame.remove(_titulo);
 				_frame.repaint();
+				iniciarBotonDeMenu();
 				iniciarTextoDeNivel();
 				iniciarTextoDeObjetivo();
 				iniciarTextoDeCantidadMovimientos();
@@ -157,7 +210,8 @@ public class Interfaz
 		_frame.add(_modo_clasico);
 	}
 
-	private void iniciarTituloDelJuego() {
+	private void iniciarTituloDelJuego() 
+	{
 		_titulo = new JTextField("Ligts out!");
 		_titulo.setBounds(0, 100, 300, 90);
 		_titulo.setFont(new Font("Times New Roman", Font.PLAIN, 75));
@@ -168,7 +222,8 @@ public class Interfaz
 		_frame.add(_titulo);
 	}
 
-	private void iniciarBotonDeNivelAnterior() {
+	private void iniciarBotonDeNivelAnterior() 
+	{
 		_nivel_anterior = new JButton("Anterior");
 		_nivel_anterior.setBounds(50, 430, 100, 20);
 		_nivel_anterior.addActionListener(new ActionListener() 
@@ -201,7 +256,8 @@ public class Interfaz
 		_frame.add(_nivel_anterior);
 	}
 
-	private void iniciarBotonDeSiguienteNivel() {
+	private void iniciarBotonDeSiguienteNivel() 
+	{
 		_siguiente_nivel = new JButton("Siguiente");
 		_siguiente_nivel.setBounds(150, 430, 100, 20);
 		_siguiente_nivel.addActionListener(new ActionListener() 
@@ -229,13 +285,13 @@ public class Interfaz
 					}
 					actualizar_estado();
 				}
-				
 			}
 		});
 		_frame.add(_siguiente_nivel);
 	}
 
-	private void iniciarBotonDeMostrarSolucion() {
+	private void iniciarBotonDeMostrarSolucion() 
+	{
 		_mostrar_solucion = new JButton("Solucion");
 		_mostrar_solucion.setBounds(100, 460, 100, 20);
 		_mostrar_solucion.addActionListener(new ActionListener() 
@@ -254,7 +310,8 @@ public class Interfaz
 		_frame.add(_mostrar_solucion);
 	}
 
-	private void iniciarBotonDeSugerirMovimiento() {
+	private void iniciarBotonDeSugerirMovimiento() 
+	{
 		_sugerir_movimiento = new JButton("ayuda");
 		_sugerir_movimiento.setBounds(150, 400, 100, 20);
 		_sugerir_movimiento.addActionListener(new ActionListener()
@@ -281,9 +338,9 @@ public class Interfaz
 				{
 					_juego.cargar_nivel_especifico(_juego.obtener_nivel_actual());
 				} catch (IOException e1) 
-				{
+				 {
 					e1.printStackTrace();
-				}
+				 }
 				_frame.repaint();
 				actualizarBotones();
 				_cantidad_de_movimientos.setText("Movimietos: " + _juego.obtener_cantidad_de_movimientos());
@@ -292,7 +349,8 @@ public class Interfaz
 		_frame.add(_recargar_nivel);
 	}
 
-	private void iniciarTextoDeCantidadMovimientos() {
+	private void iniciarTextoDeCantidadMovimientos() 
+	{
 		_cantidad_de_movimientos = new JTextField("Movimientos: " + _juego.obtener_cantidad_de_movimientos());
 		_cantidad_de_movimientos.setHorizontalAlignment(SwingConstants.CENTER);
 		_cantidad_de_movimientos.setBounds(195, 50, 100, 40);
@@ -302,7 +360,8 @@ public class Interfaz
 		_frame.add(_cantidad_de_movimientos);
 	}
 
-	private void iniciarTextoDeObjetivo() {
+	private void iniciarTextoDeObjetivo() 
+	{
 		_objetivo_de_movimientos = new JTextField("Objetivo: " + _juego.obtener_solucion_del_nivel_actual().size());
 		_objetivo_de_movimientos.setHorizontalAlignment(SwingConstants.CENTER);
 		_objetivo_de_movimientos.setBounds(90, 50, 100, 40);
@@ -312,7 +371,8 @@ public class Interfaz
 		_frame.add(_objetivo_de_movimientos);
 	}
 
-	private void iniciarTextoDeNivel() {
+	private void iniciarTextoDeNivel() 
+	{
 		_nivel_actual = new JTextField("Nivel: " + 1);
 		_nivel_actual.setHorizontalAlignment(SwingConstants.CENTER);
 		_nivel_actual.setBounds(0, 50, 80, 40);
@@ -323,7 +383,8 @@ public class Interfaz
 		_frame.add(_nivel_actual);
 	}
 
-	private void iniciarFrame() {
+	private void iniciarFrame() 
+	{
 		_frame = new JFrame("Ligts out!");
 		_frame.setBounds(100, 100, 300, 600);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -395,25 +456,33 @@ public class Interfaz
 			}
 			else 
 			{
-				try 
+				if(_juego.obtener_nivel_actual() == 39)
 				{
-					_juego.cargar_siguiente_nivel();
-				} 
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				} 
-				catch (NullPointerException e)
-				{
-					finalizarJuego();
+					try {
+						_juego.reiniciar_juego();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
+				else 
+				{
+					try 
+					{
+						_juego.cargar_siguiente_nivel();
+					} catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+				}
+				
 				actualizar_estado();
 			}
 			
 		}
 	}
 
-	private void limpiarBotones() {
+	private void limpiarBotones() 
+	{
 		for(int i = 0; i < _botones.length; i++) 
 		{
 			for(int j = 0; j < _botones.length; j++) 
