@@ -80,6 +80,17 @@ public class Juego {
 		contador_de_movimientos = 0;
 	}
 	
+
+	public void guardarRecord() throws IOException 
+	{
+		Datos.guardarDatosDeRecord(record_de_movimientos);
+	}
+	
+	public String obtenerUltimoRecordTotal() throws IOException
+	{
+		return Datos.obtenerUltimoRecord();
+	}
+	
 	public Tablero clonar_tablero()
 	{
 		return _tablero.clonar_tablero();
@@ -119,5 +130,4 @@ public class Juego {
 	{
 		return  _tablero.toString();
 	}
-
 }
