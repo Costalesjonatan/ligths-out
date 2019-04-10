@@ -30,13 +30,7 @@ public class Interfaz
 			_juego.realizar_movimiento(i, j);
 			_cantidad_de_movimientos.setText("Movimientos: " + _juego.obtener_cantidad_de_movimientos());
 			actualizarBotonesDelTablero();
-			try 
-			{
-				actualizarNivel();
-			} catch (InterruptedException e1) 
-			{
-				e1.printStackTrace();
-			}
+			actualizarNivel();
 		}
 	}
 	
@@ -169,7 +163,7 @@ public class Interfaz
 	}
 	private void iniciarTextoDeUltimoRecord()
 	{
-		_ultimo_record = new JTextField("Ultimo mejor record: Nivel 0 Movimientos: 0");
+		_ultimo_record = new JTextField("Record actual modo clasico: 0");
 		_ultimo_record.setBounds(0, 0, 300, 300);
 		_ultimo_record.setHorizontalAlignment(SwingConstants.CENTER);
 		_ultimo_record.setFont(new Font("Times New Roman", Font.PLAIN, 16));
@@ -252,7 +246,7 @@ public class Interfaz
 					ultimoRecord = _juego.obtenerUltimoRecordTotal();
 					if(ultimoRecord != null)
 					{
-						_ultimo_record.setText("ultimo mejor record: Nivel 10 Movimientos: " + ultimoRecord);
+						_ultimo_record.setText("Record actual modo clasico: " + ultimoRecord + " movimientos.");
 					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -498,44 +492,50 @@ public class Interfaz
 			}
 		}
 	}
-	private void actualizarNivel() throws InterruptedException  
+	
+	private void actualizarNivel()   
 	{
 		if(_juego.termino_el_nivel())
 		{	
 			if(_juego.obtener_nivel_actual() == 9 && !_mostrar_solucion.isVisible()) 
 			{
-				try {
-					_juego.guardarRecord();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				finalizarJuego();
+				finalizoModoClasico();
 			}
 			else 
 			{
-				if(_juego.obtener_nivel_actual() == 39)
-				{
-					try {
-						_juego.reiniciar_juego();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				else 
-				{
-					try 
-					{
-						_juego.cargar_siguiente_nivel();
-					} catch (IOException e) 
-					{
-						e.printStackTrace();
-					}
-				}
-				
-				actualizarEstadoDelTablero();
-			}
-			
+				completoUnNivel();
+			}	
 		}
+	}
+
+	private void completoUnNivel() {
+		JOptionPane.showMessageDialog(_frame, "Bien hecho!", "Nivel " + (_juego.obtener_nivel_actual()+1) +  " completo.", 1);
+		try 
+		{
+			_juego.cargar_siguiente_nivel();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e1)
+		{
+			try 
+			{
+				_juego.cargar_nivel_especifico(0);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		actualizarEstadoDelTablero();
+	}
+
+	private void finalizoModoClasico() {
+		try {
+			_juego.guardarRecord();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		finalizarJuego();
 	}
 	private void limpiarBotonesDelTablero() 
 	{
@@ -550,7 +550,7 @@ public class Interfaz
 	}
 	private void finalizarJuego()
 	{
-		JOptionPane.showMessageDialog(null, "Felicitaciones, Completaste todos los niveles!");
+		JOptionPane.showMessageDialog(_frame, "Felicitaciones, Completaste todos los niveles!", "Modo Clasico Terminado.", 1);
 		limpiarBotonesDelTablero();
 		try 
 		{
