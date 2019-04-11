@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import baseDeDatos.Datos;
+import baseDeDatos.Records;
 //TODO: hace los casos de test de los metodos que gargaste
 public class Juego {
 	
@@ -81,14 +82,14 @@ public class Juego {
 	}
 	
 
-	public void guardarRecord() throws IOException 
-	{
-		Datos.guardarDatosDeRecord(record_de_movimientos);
-	}
+//	public void guardarRecord() throws IOException 
+//	{
+//		Datos.guardarDatosDeRecord(record_de_movimientos);
+//	}
 	
-	public String obtenerUltimoRecordTotal() throws IOException
+	public Records cargarRecords() throws IOException
 	{
-		return Datos.obtenerUltimoRecord();
+		return Datos.obtenerRecords();
 	}
 	
 	public Tablero clonar_tablero()

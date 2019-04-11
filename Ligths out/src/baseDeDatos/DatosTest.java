@@ -2,13 +2,11 @@ package baseDeDatos;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.IOException;
-
 import org.junit.Test;
 
 public class DatosTest {
-
+	
 	@Test
 	public void obtenerNivelTest() throws IOException
 	{

@@ -1,13 +1,12 @@
 package baseDeDatos;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class Datos {
-
 	
 	public static String obtenerNivel(int nivel) throws IOException
 	{
@@ -36,33 +35,52 @@ public class Datos {
 		return nivelAcargar;
 	}
 	
-	public static void guardarDatosDeRecord(int cantidad_de_moviemintos_total) throws IOException 
+	public static Records obtenerRecords()
 	{
-		BufferedWriter bw = new BufferedWriter(new FileWriter("recursos/record.txt"));
-		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
+		Records records = null;
 		
-		String record_actual = bf.readLine();
-		if(record_actual == null)
+		try
 		{
-			bw.write(cantidad_de_moviemintos_total + "");
+			FileInputStream fis = new FileInputStream("Record.txt");
+			ObjectInputStream in = new ObjectInputStream(fis);
+			records = (Records) in.readObject();
+			in.close();
 		}
-		else if(cantidad_de_moviemintos_total < Integer.parseInt(record_actual))
+		catch (Exception ex)
 		{
-			bw.write(cantidad_de_moviemintos_total + "");
+			ex.printStackTrace();
 		}
-		
-		bw.close();
-		bf.close();
+		return records;
 	}
 	
-	public static String obtenerUltimoRecord() throws IOException
-	{
-		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
-		String ultimo_record = bf.readLine();
-		bf.close();
-		return ultimo_record;
-		
-	}
+	
+//	public static void guardarDatosDeRecord(int cantidad_de_moviemintos_total) throws IOException 
+//	{
+//		BufferedWriter bw = new BufferedWriter(new FileWriter("recursos/record.txt"));
+//		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
+//		
+//		String record_actual = bf.readLine();
+//		if(record_actual == null)
+//		{
+//			bw.write(cantidad_de_moviemintos_total + "");
+//		}
+//		else if(cantidad_de_moviemintos_total < Integer.parseInt(record_actual))
+//		{
+//			bw.write(cantidad_de_moviemintos_total + "");
+//		}
+//		
+//		bw.close();
+//		bf.close();
+//	}
+//	
+//	public static String obtenerUltimoRecord() throws IOException
+//	{
+//		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
+//		String ultimo_record = bf.readLine();
+//		bf.close();
+//		return ultimo_record;
+//		
+//	}
 	
 	private static void verificarArgumento(int nivel)
 	{
