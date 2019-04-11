@@ -41,7 +41,7 @@ public class Datos {
 		
 		try
 		{
-			FileInputStream fis = new FileInputStream("Record.txt");
+			FileInputStream fis = new FileInputStream("recursos/record.txt");
 			ObjectInputStream in = new ObjectInputStream(fis);
 			records = (Records) in.readObject();
 			in.close();

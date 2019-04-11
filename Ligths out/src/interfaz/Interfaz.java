@@ -1,12 +1,21 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+
+import baseDeDatos.Records;
 import negocio.Juego;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -50,7 +59,8 @@ public class Interfaz
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
 	private JTextField _titulo;
-	private JTextField _ultimo_record;
+	private JTable _records;
+	private JTableHeader _encabezadoDeRecords;
 
 	public static void main(String[] args) 
 	{
@@ -93,7 +103,7 @@ public class Interfaz
 		iniciarBotonDeMostrarSolucion();
 		iniciarBotonDeSiguienteNivel();
 		iniciarBotonDeNivelAnterior();
-		iniciarTextoDeUltimoRecord();
+		iniciarTablaDeUltimoRecord();
 	}
 	
 	private void iniciarObjetoJuego() 
@@ -161,17 +171,41 @@ public class Interfaz
 		_frame.add(_cantidad_de_movimientos);
 		_cantidad_de_movimientos.setVisible(false);
 	}
-	private void iniciarTextoDeUltimoRecord()
+	private void iniciarTablaDeUltimoRecord()
 	{
-		_ultimo_record = new JTextField("Record actual modo clasico: 0");
-		_ultimo_record.setBounds(0, 0, 300, 300);
-		_ultimo_record.setHorizontalAlignment(SwingConstants.CENTER);
-		_ultimo_record.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		_ultimo_record.setBackground(Color.GRAY);
-		_ultimo_record.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-		_ultimo_record.setVisible(false);
-		_ultimo_record.setEditable(false);
-		_frame.add(_ultimo_record);
+		String[] nombresColumnas = {"Nombre", "Nivel", "Movimientos"};
+		String[][] datosDeTabla = new String[20][3];
+		Records recordsActuales = null;
+		try {
+			recordsActuales = _juego.cargarRecords();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int j = 0;
+		for(int i = 0; i < 20; i+=2)
+		{
+			datosDeTabla[i][0] = recordsActuales.obtenerNombreDeRecord(j);
+			datosDeTabla[i][1] = recordsActuales.obtenerNivelDeRecord(j) + "";
+			datosDeTabla[i][2] = recordsActuales.obtenerMovimientosDeRecord(j) + "";
+			j++;
+		}
+		TableModel model = new DefaultTableModel (datosDeTabla, nombresColumnas);
+		_records = new JTable(model);
+		_records.setBounds(0, 50, 300, 400);
+		_records.setBackground(Color.GRAY);
+		_records.setShowGrid(false);
+		_records.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		_encabezadoDeRecords = _records.getTableHeader();
+		_encabezadoDeRecords.setBounds(-10, 20, 300, 20);
+		_encabezadoDeRecords.setBackground(Color.GRAY);
+		_encabezadoDeRecords.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		_encabezadoDeRecords.setResizingAllowed(false);
+		_encabezadoDeRecords.setReorderingAllowed(false);
+		_encabezadoDeRecords.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		_frame.add(_records ,BorderLayout.CENTER);
+		_frame.add(_encabezadoDeRecords ,BorderLayout.NORTH);
+		_encabezadoDeRecords.setVisible(false);
+		_records.setVisible(false);
 	}
 	private void iniciarBotonDeMenu() 
 	{
@@ -181,7 +215,7 @@ public class Interfaz
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if(!_ultimo_record.isVisible())
+				if(!_records.isVisible())
 				{
 					limpiarBotonesDelTablero();
 					ocultarInterfazDeJuego();
@@ -193,7 +227,8 @@ public class Interfaz
 						e.printStackTrace();
 					}
 				}
-				_ultimo_record.setVisible(false);
+				_records.setVisible(false);
+				_encabezadoDeRecords.setVisible(false);
 				mostrarInterfazDelMenu();
 			}
 		});
@@ -241,20 +276,10 @@ public class Interfaz
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				String ultimoRecord;
-				try {
-					ultimoRecord = _juego.obtenerUltimoRecordTotal();
-					if(ultimoRecord != null)
-					{
-						_ultimo_record.setText("Record actual modo clasico: " + ultimoRecord + " movimientos.");
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				_encabezadoDeRecords.setVisible(true);
+				_records.setVisible(true);
 				ocultarInterfazDelMenu();
 				_volver_al_menu.setVisible(true);
-				_ultimo_record.setVisible(true);
-				
 			}
 		});
 		_frame.add(_ver_mejores_puntuaciones);
@@ -530,11 +555,11 @@ public class Interfaz
 	}
 
 	private void finalizoModoClasico() {
-		try {
-			_juego.guardarRecord();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			_juego.guardarRecord();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		finalizarJuego();
 	}
 	private void limpiarBotonesDelTablero() 
@@ -554,7 +579,7 @@ public class Interfaz
 		limpiarBotonesDelTablero();
 		try 
 		{
-			_juego.guardarRecord();
+//			_juego.guardarRecord();
 			_juego.reiniciar_juego();
 		} 
 		catch (IOException e) 
