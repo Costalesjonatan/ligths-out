@@ -2,12 +2,10 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,7 +21,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-//TODO: anda cerrando detalles que tenes la fecha de entrega midiendote los talones
+
 public class Interfaz 
 {
 	private class localizadorDeClick implements ActionListener
@@ -38,6 +36,7 @@ public class Interfaz
 		
 			_juego.realizar_movimiento(i, j);
 			_cantidad_de_movimientos.setText("Movimientos: " + _juego.obtener_cantidad_de_movimientos());
+			_cantidad_de_movimientos_total.setText("Movimientos Total: " + (_juego.obtener_record_de_movimientos() + _juego.obtener_cantidad_de_movimientos()));
 			actualizarBotonesDelTablero();
 			actualizarNivel();
 		}
@@ -59,6 +58,7 @@ public class Interfaz
 	private JTextField _objetivo_de_movimientos;
 	private JTextField _cantidad_de_movimientos;
 	private JTextField _titulo;
+	private JTextField _cantidad_de_movimientos_total;
 	private JTable _records;
 	private JTableHeader _encabezadoDeRecords;
 
@@ -94,6 +94,7 @@ public class Interfaz
 		iniciarTextoDeNivel();
 		iniciarTextoDeObjetivo();
 		iniciarTextoDeCantidadMovimientos();
+		iniciarTextoDeTotalDeMovimientos();
 		iniciarBotonDeMenu();
 		iniciarBotonDeModoClasico();
 		iniciarBotonDeModoLibre();
@@ -171,6 +172,18 @@ public class Interfaz
 		_frame.add(_cantidad_de_movimientos);
 		_cantidad_de_movimientos.setVisible(false);
 	}
+	
+	private void iniciarTextoDeTotalDeMovimientos()
+	{
+		_cantidad_de_movimientos_total = new JTextField("Movimientos Total: " + _juego.obtener_record_de_movimientos());
+		_cantidad_de_movimientos_total.setHorizontalAlignment(SwingConstants.CENTER);
+		_cantidad_de_movimientos_total.setBounds(75, 10, 150, 40);
+		_cantidad_de_movimientos_total.setEditable(false);
+		_cantidad_de_movimientos_total.setBackground(Color.GRAY);
+		_cantidad_de_movimientos_total.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		_frame.add(_cantidad_de_movimientos_total);
+		_cantidad_de_movimientos_total.setVisible(false);
+	}
 	private void iniciarTablaDeUltimoRecord()
 	{
 		String[] nombresColumnas = {"Nombre", "Nivel", "Movimientos"};
@@ -217,6 +230,7 @@ public class Interfaz
 			{
 				if(!_records.isVisible())
 				{
+					
 					limpiarBotonesDelTablero();
 					ocultarInterfazDeJuego();
 					try 
@@ -302,6 +316,7 @@ public class Interfaz
 				_frame.repaint();
 				actualizarBotonesDelTablero();
 				_cantidad_de_movimientos.setText("Movimietos: " + _juego.obtener_cantidad_de_movimientos());
+				_cantidad_de_movimientos_total.setText("Movimientos Total: " + (_juego.obtener_record_de_movimientos() + _juego.obtener_cantidad_de_movimientos()));
 			}
 		});
 		_frame.add(_recargar_nivel);
@@ -429,6 +444,7 @@ public class Interfaz
 		_recargar_nivel.setVisible(false);
 		_sugerir_movimiento.setVisible(false);
 		_volver_al_menu.setVisible(false);
+		_cantidad_de_movimientos_total.setVisible(false);
 		if(_mostrar_solucion != null)
 		{
 			_mostrar_solucion.setVisible(false);
@@ -443,6 +459,7 @@ public class Interfaz
 		_mostrar_solucion.setVisible(true);
 	    _siguiente_nivel.setVisible(true);
 		_nivel_anterior.setVisible(true);
+		_cantidad_de_movimientos_total.setVisible(false);
 	}
 	private void mostrarInterfazDeModoClasico()
 	{
@@ -450,6 +467,7 @@ public class Interfaz
 		_nivel_actual.setVisible(true);
 		_objetivo_de_movimientos.setVisible(true);
 		_cantidad_de_movimientos.setVisible(true);
+		_cantidad_de_movimientos_total.setVisible(true);
 		_recargar_nivel.setVisible(true);
 		_sugerir_movimiento.setVisible(true);
 	}
@@ -522,7 +540,7 @@ public class Interfaz
 	{
 		if(_juego.termino_el_nivel())
 		{	
-			if(_juego.obtener_nivel_actual() == 9 && !_mostrar_solucion.isVisible()) 
+			if(_juego.obtener_nivel_actual() == 39 && !_mostrar_solucion.isVisible()) 
 			{
 				finalizoModoClasico();
 			}
@@ -554,14 +572,7 @@ public class Interfaz
 		actualizarEstadoDelTablero();
 	}
 
-	private void finalizoModoClasico() {
-//		try {
-//			_juego.guardarRecord();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		finalizarJuego();
-	}
+
 	private void limpiarBotonesDelTablero() 
 	{
 		for(int i = 0; i < _botones.length; i++) 
@@ -573,13 +584,15 @@ public class Interfaz
 			}
 		}
 	}
-	private void finalizarJuego()
+	private void finalizoModoClasico()
 	{
 		JOptionPane.showMessageDialog(_frame, "Felicitaciones, Completaste todos los niveles!", "Modo Clasico Terminado.", 1);
-		limpiarBotonesDelTablero();
+		
 		try 
-		{
-//			_juego.guardarRecord();
+		{	
+			String nombre = JOptionPane.showInputDialog(_frame, "Ingrese un nombre");
+			_juego.guardarRecord(nombre);
+			iniciarTablaDeUltimoRecord();
 			_juego.reiniciar_juego();
 		} 
 		catch (IOException e) 
@@ -587,6 +600,7 @@ public class Interfaz
 			e.printStackTrace();
 		}
 		actualizarTextosDeLaInterfazDelJuego();
+		limpiarBotonesDelTablero();
 		ocultarInterfazDeJuego();
 		mostrarInterfazDelMenu();
 	}

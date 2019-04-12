@@ -82,10 +82,13 @@ public class Juego {
 	}
 	
 
-//	public void guardarRecord() throws IOException 
-//	{
-//		Datos.guardarDatosDeRecord(record_de_movimientos);
-//	}
+	public void guardarRecord(String nombre) throws IOException 
+	{
+		record_de_movimientos+=contador_de_movimientos;
+		Records records = Datos.obtenerRecords();
+		records.analizarRecordNuevo(nombre, this.record_de_movimientos);
+		Datos.guardarRecords(records);
+	}
 	
 	public Records cargarRecords() throws IOException
 	{

@@ -2,9 +2,11 @@ package baseDeDatos;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Datos {
 	
@@ -54,33 +56,20 @@ public class Datos {
 	}
 	
 	
-//	public static void guardarDatosDeRecord(int cantidad_de_moviemintos_total) throws IOException 
-//	{
-//		BufferedWriter bw = new BufferedWriter(new FileWriter("recursos/record.txt"));
-//		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
-//		
-//		String record_actual = bf.readLine();
-//		if(record_actual == null)
-//		{
-//			bw.write(cantidad_de_moviemintos_total + "");
-//		}
-//		else if(cantidad_de_moviemintos_total < Integer.parseInt(record_actual))
-//		{
-//			bw.write(cantidad_de_moviemintos_total + "");
-//		}
-//		
-//		bw.close();
-//		bf.close();
-//	}
-//	
-//	public static String obtenerUltimoRecord() throws IOException
-//	{
-//		BufferedReader bf = new BufferedReader(new FileReader("recursos/record.txt"));
-//		String ultimo_record = bf.readLine();
-//		bf.close();
-//		return ultimo_record;
-//		
-//	}
+	public static void guardarRecords(Records records) throws IOException 
+	{
+		try 
+		{
+			FileOutputStream fos = new FileOutputStream("recursos/record.txt");
+			ObjectOutputStream out = new ObjectOutputStream(fos);
+			out.writeObject(records);
+			out.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 	
 	private static void verificarArgumento(int nivel)
 	{
