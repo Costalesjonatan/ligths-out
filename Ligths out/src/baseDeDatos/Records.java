@@ -11,33 +11,53 @@ public class Records implements Serializable {
 	public Records()
 	{
 		_records = new Record[10];
-		
-		_records[0] = new Record("Esmeralda", 40, 200);
-		_records[1] = new Record("Fanny", 40, 250);
-		_records[2] = new Record("Aldous", 40, 199);
-		_records[3] = new Record("Karina", 40, 215);
-		_records[4] = new Record("Nana", 40, 201);
-		_records[5] = new Record("Eudora", 40, 205);
-		_records[6] = new Record("Lesly", 40, 195);
-		_records[7] = new Record("Moskov", 40, 235);
-		_records[8] = new Record("Kufra", 40, 306);
-		_records[9] = new Record("Grock", 40, 352);
-
+	}
+	
+	public void agregarRecord(String nombre, int nivel, int movimientos)
+	{
+		if(_records[9] != null)
+		{
+			throw new RuntimeException("Se Alcanzo el maximo de records");
+		}
+		int i = 0;
+		while(i < 10)
+		{
+			if(_records[i] == null)
+			{
+				_records[i] = new Record(nombre, nivel, movimientos);
+				i = 10;
+			}
+			else
+			{
+				i++;
+			}
+		}
 	}
 	
 	public String obtenerNombreDeRecord(int posicion)
 	{
+		verificarArgumentos(posicion);
 		return _records[posicion].obtenerNombre();
 	}
 	
 	public int obtenerNivelDeRecord(int posicion)
 	{
+		verificarArgumentos(posicion);
 		return _records[posicion].obtenerNivel();
 	}
 	
 	public int obtenerMovimientosDeRecord(int posicion)
 	{
+		verificarArgumentos(posicion);
 		return _records[posicion].obtenerMovimeintos();
+	}
+	
+	private void verificarArgumentos(int posicion)
+	{
+		if(posicion < 0 || posicion > 9)
+		{
+			throw new IndexOutOfBoundsException("La posicion " + posicion + "no existe");
+		}
 	}
 	
 	public void ordenarRecords()
@@ -46,9 +66,12 @@ public class Records implements Serializable {
 		{
 			for(int j = 0; j < 10; j++)
 			{
-				if(this._records[i].obtenerMovimeintos() < this._records[j].obtenerMovimeintos())
+				if(this._records[i] != null && this._records[j] != null)
 				{
-					intercambiar(i, j);
+					if(this._records[i].obtenerMovimeintos() < this._records[j].obtenerMovimeintos())
+					{
+						intercambiar(i, j);
+					}
 				}
 			}
 		}
@@ -63,18 +86,26 @@ public class Records implements Serializable {
 	
 	public void analizarRecordNuevo(String nombre, int movimientos)
 	{
-		
-		if(movimientos < this._records[9].obtenerMovimeintos())
+		if(_records[9] == null)
 		{
-			int i = 0;
-			
-			while(movimientos > this._records[i].obtenerMovimeintos())
-			{
-				i++;
-			}
-			Record record = new Record(nombre, 40, movimientos);
-			this._records[9] = record;
+			agregarRecord(nombre, 40, movimientos);
 			ordenarRecords();
+		}
+		else
+		{
+			ordenarRecords();
+			if(movimientos < this._records[9].obtenerMovimeintos())
+			{
+				int i = 0;
+				
+				while(movimientos > this._records[i].obtenerMovimeintos())
+				{
+					i++;
+				}
+				Record record = new Record(nombre, 40, movimientos);
+				this._records[9] = record;
+				ordenarRecords();
+			}
 		}
 	}
 
@@ -84,8 +115,11 @@ public class Records implements Serializable {
 		
 		for(int i = 0; i < 10; i++)
 		{
-			ret.append(_records[i].toString());
-			ret.append("\n");
+			if(_records[i] != null)
+			{
+				ret.append(_records[i].toString());
+				ret.append("\n");
+			}
 		}
 		return ret.toString();
 	}
