@@ -14,34 +14,34 @@ public class RecordsTest
 	public void setUp()
 	{
 		records = new Records();
-		records.agregarRecord("Esmeralda", 40, 200);
-		records.agregarRecord("Fanny", 40, 250);
-		records.agregarRecord("Aldous", 40, 199);
-		records.agregarRecord("Karina", 40, 215);
-		records.agregarRecord("Nana", 40, 201);
-		records.agregarRecord("Eudora", 40, 205);
-		records.agregarRecord("Lesly", 40, 187);
-		records.agregarRecord("Moskov", 40, 235);
-		records.agregarRecord("Kufra", 40, 306);
+		records.agregarRecord("Esmeralda", 80, 200);
+		records.agregarRecord("Fanny", 80, 250);
+		records.agregarRecord("Aldous", 80, 199);
+		records.agregarRecord("Karina", 80, 215);
+		records.agregarRecord("Nana", 80, 201);
+		records.agregarRecord("Eudora", 80, 205);
+		records.agregarRecord("Lesly", 80, 187);
+		records.agregarRecord("Moskov", 80, 235);
+		records.agregarRecord("Kufra", 80, 306);
 		
 		esperado = new Records();
-		esperado.agregarRecord("Lesly", 40, 187);
-		esperado.agregarRecord("Aldous", 40, 199);
-		esperado.agregarRecord("Esmeralda", 40, 200);
-		esperado.agregarRecord("Nana", 40, 201);
-		esperado.agregarRecord("Eudora", 40, 205);
-		esperado.agregarRecord("Karina", 40, 215);
-		esperado.agregarRecord("Moskov", 40, 235);
-		esperado.agregarRecord("Fanny", 40, 250);
-		esperado.agregarRecord("Kufra", 40, 306);
+		esperado.agregarRecord("Lesly", 80, 187);
+		esperado.agregarRecord("Aldous", 80, 199);
+		esperado.agregarRecord("Esmeralda", 80, 200);
+		esperado.agregarRecord("Nana", 80, 201);
+		esperado.agregarRecord("Eudora", 80, 205);
+		esperado.agregarRecord("Karina", 80, 215);
+		esperado.agregarRecord("Moskov", 80, 235);
+		esperado.agregarRecord("Fanny", 80, 250);
+		esperado.agregarRecord("Kufra", 80, 306);
 		
 	}
 	
 	@Test (expected = RuntimeException.class)
 	public void recordLlenoTest()
 	{
-		records.agregarRecord("Grock", 40, 300);
-		records.agregarRecord("karina", 40, 500);
+		records.agregarRecord("Grock", 80, 300);
+		records.agregarRecord("karina", 80, 500);
 	}
 	
 	@Test (expected = IndexOutOfBoundsException.class)
@@ -90,7 +90,7 @@ public class RecordsTest
 	@Test
 	public void obtenerNivelTest()
 	{
-		assertEquals(records.obtenerNivelDeRecord(0), 40);
+		assertEquals(records.obtenerNivelDeRecord(0), 80);
 	}
 	
 	@Test
@@ -109,7 +109,7 @@ public class RecordsTest
 	@Test
 	public void analizarRecordNuevoQueQuedaFueraTest()
 	{
-		records.agregarRecord("Grock", 40, 300);
+		records.agregarRecord("Grock", 80, 300);
 		records.analizarRecordNuevo("Karina", 500);
 		assertEquals(records.obtenerNombreDeRecord(9), "Kufra");
 		
@@ -118,7 +118,7 @@ public class RecordsTest
 	@Test 
 	public void analizarRecordNuevoQueQuedaDentroTest()
 	{
-		records.agregarRecord("Grock", 40, 300);
+		records.agregarRecord("Grock", 80, 300);
 		records.analizarRecordNuevo("Kimmy", 168);
 		assertEquals(records.obtenerNombreDeRecord(0), "Kimmy");
 	}
@@ -133,7 +133,7 @@ public class RecordsTest
 	@Test
 	public void analizaRecordNuevoTest()
 	{
-		records.agregarRecord("Grock", 40, 300);
+		records.agregarRecord("Grock", 80, 300);
 		records.analizarRecordNuevo("Karina", 303);
 		assertEquals(records.obtenerNombreDeRecord(9), "Karina");
 	}

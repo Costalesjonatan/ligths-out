@@ -20,7 +20,7 @@ public class DatosTest {
 	@Test 
 	public void meQuedeSinNivelesTest() throws IOException 
 	{
-		String nivel = Datos.obtenerNivel(40);
+		String nivel = Datos.obtenerNivel(100);
 		
 		assertEquals(nivel, null);
 	}

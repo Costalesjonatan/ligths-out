@@ -39,7 +39,7 @@ public class Record implements Serializable{
 		{
 			throw new IllegalArgumentException("Debe ingresar un nombre!");
 		}
-		if(nivel < 0 || nivel > 40)
+		if(nivel < 0 || nivel > 80)
 		{
 			throw new IllegalArgumentException("El nivel especificdo no existe: " + nivel );
 		}

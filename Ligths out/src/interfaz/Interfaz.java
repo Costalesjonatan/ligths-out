@@ -230,7 +230,6 @@ public class Interfaz
 			{
 				if(!_records.isVisible())
 				{
-					
 					limpiarBotonesDelTablero();
 					ocultarInterfazDeJuego();
 					try 
@@ -261,6 +260,7 @@ public class Interfaz
 				mostrarInterfazDeModoClasico();
 				inicializarBotonesDelTablero();
 				actualizarBotonesDelTablero();
+				actualizarTextosDeLaInterfazDelJuego();
 			}
 		});
 		_frame.add(_modo_clasico);
@@ -278,6 +278,7 @@ public class Interfaz
 				mostrarInterfazDeModoLibre();
 				inicializarBotonesDelTablero();
 				actualizarBotonesDelTablero();
+				actualizarTextosDeLaInterfazDelJuego();
 			}
 		});
 		_frame.add(_modo_libre);
@@ -316,7 +317,6 @@ public class Interfaz
 				_frame.repaint();
 				actualizarBotonesDelTablero();
 				_cantidad_de_movimientos.setText("Movimietos: " + _juego.obtener_cantidad_de_movimientos());
-				_cantidad_de_movimientos_total.setText("Movimientos Total: " + (_juego.obtener_record_de_movimientos() + _juego.obtener_cantidad_de_movimientos()));
 			}
 		});
 		_frame.add(_recargar_nivel);
@@ -414,7 +414,7 @@ public class Interfaz
 				{
 					try 
 					{
-						_juego.cargar_nivel_especifico(39);
+						_juego.cargar_nivel_especifico(99);
 					} 
 					catch (IOException e) 
 					{
@@ -480,9 +480,10 @@ public class Interfaz
 	}
 	private void actualizarTextosDeLaInterfazDelJuego()
 	{
-		_nivel_actual.setText("Nivel: " + _juego.obtener_nivel_actual());
+		_nivel_actual.setText("Nivel: " + (_juego.obtener_nivel_actual()+1));
 		_objetivo_de_movimientos.setText("Objetivo: " + _juego.obtener_solucion_del_nivel_actual().size());
 		_cantidad_de_movimientos.setText("Movimientos: " + _juego.obtener_cantidad_de_movimientos());
+		_cantidad_de_movimientos_total.setText("Movimientos Total: " + _juego.obtener_record_de_movimientos());
 	}
 	private void actualizarEstadoDelTablero()
 	{
@@ -540,7 +541,7 @@ public class Interfaz
 	{
 		if(_juego.termino_el_nivel())
 		{	
-			if(_juego.obtener_nivel_actual() == 39 && !_mostrar_solucion.isVisible()) 
+			if(_juego.obtener_nivel_actual() == 79 && !_mostrar_solucion.isVisible()) 
 			{
 				finalizoModoClasico();
 			}

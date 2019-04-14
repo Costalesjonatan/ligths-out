@@ -24,7 +24,7 @@ public class RecordTest
 	@Test(expected = IllegalArgumentException.class)
 	public void verificarArgumentosNivelSuperior()
 	{
-		record = new Record("Fanny", 41, 200);
+		record = new Record("Fanny", 100, 200);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

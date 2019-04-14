@@ -102,7 +102,7 @@ public class Records implements Serializable {
 				{
 					i++;
 				}
-				Record record = new Record(nombre, 40, movimientos);
+				Record record = new Record(nombre, 80, movimientos);
 				this._records[9] = record;
 				ordenarRecords();
 			}
