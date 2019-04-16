@@ -12,7 +12,7 @@ public class Tablero {
 	
 	private void verificar_tamaño(int tamaño) 
 	{
-		if(tamaño <= 0)
+		if(tamaño < 3)
 		{
 			throw new IllegalArgumentException("se intento crear un tablero de tamaño 0 o negativo: " + tamaño);
 		}

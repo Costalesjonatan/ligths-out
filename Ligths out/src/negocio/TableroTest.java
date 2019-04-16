@@ -24,7 +24,7 @@ public class TableroTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void verificar_tamaño_0_test()
 	{
-		tablero = new Tablero(0);
+		tablero = new Tablero(2);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
